@@ -85,13 +85,12 @@ def game():
                         pts = pts+1
                         break                       
 
-        score = "SCORE : "+str(pts)
+        msg = "SCORE : "+str(pts)
         font = cv2.FONT_HERSHEY_SIMPLEX
         bottomLeftCornerOfText = ( 230 ,25 )
         fontScale              = 1
         fontColor              = ( 0 ,0 ,0 )
         lineType               = 2
-        cv2.putText( img ,score,bottomLeftCornerOfText ,font ,fontScale ,fontColor ,lineType )
         if ( x1 <= 0 ):
             dx = randint(1,5)
         if ( y2 >= bar_lvl ):
@@ -101,11 +100,12 @@ def game():
             font = cv2.FONT_HERSHEY_SIMPLEX
             bottomLeftCornerOfText = ( 230 ,25 )
             fontScale              = 1
-            fontColor              = ( 0 ,0 ,0 )
+            fontColor              = ( 0 ,0 ,255 )
             lineType               = 2
-            cv2.putText( img ,'GAME OVER!' ,bottomLeftCornerOfText ,font ,fontScale ,fontColor ,lineType )        
+            msg = 'GAME OVER!'       
             if y2 > bar_lvl+40:
                 break
+        cv2.putText( img ,msg,bottomLeftCornerOfText ,font ,fontScale ,fontColor ,lineType )
         #cv2.imshow( 'Mask' ,mask )
         cv2.imshow('frame',frame)
         if cv2.waitKey(10)&0xFF==ord('q'):
