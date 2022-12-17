@@ -53,14 +53,18 @@ def game():
                     rayon = int(np.divide(np.sqrt(np.add(np.power(w,2),np.power(h,2))), 2))
                     frame = cv2.circle(frame,(x,y),rayon,(100,120,20),5)
                     if(rayon > 50):
-                        img = cv2.rectangle( frame,( wf - (whole_wid-(offset_mvt-25)) + 1 ,bar_lvl ), ( wf - (whole_wid-(offset_mvt+25)) + 1 ,bar_lvl+10 ), (255 ,255 ,255), -1 )
-                        cv2.rectangle( mask, ( x ,y ) ,( x+w ,y+h ) ,( 255 ,0 ,0 ) ,2 )
-                    offset_mvt = int( ( x - ( w/2 ) ) )
+                        img = cv2.rectangle( frame,( whole_wid-(offset_mvt-25) ,bar_lvl ), ( whole_wid-(offset_mvt+25) ,bar_lvl+10 ), (255 ,255 ,255), -1 )
+                        cv2.rectangle( mask, ( x ,y ) ,( x+w ,y+h ) ,( 255 ,0 ,0 ) ,2 ) #pour cerné la couleur détéctée dans le masque 
+                    offset_mvt = int( ( x - ( w/2 ) ) ) #on update le mouvement du paddle
+        #on update le mouvement du ballon            
         x1 = x1 + dx
         y1 = y1 + dy
         y2 = y2 + dy
         x2 = x2 + dx
+        #on dessine notre ballon
         img = cv2.rectangle( frame, ( x1 ,y1 ), ( x2 ,y2 ), ( 255 ,255 ,255 ), -1 )
+
+        #on dessine les briques dans les coordonnées qu'on avait déja prédefini avant
         for i in range(4):
             for j in range(18):
                 rec = bricks[i][j]
@@ -70,8 +74,9 @@ def game():
                     x12 = int(rec_1[0])
                     y12 = int(rec_1[1])
                 img = cv2.rectangle( frame, ( x12 , y12 ), ( x12+50 , y12+10 ), ( 0 ,0+(10*j) ,0+(20*j) ), -1 )
-        if ( x2 >= whole_wid ):
-            dx = -(randint(1, 5))
+        
+
+        #si on percute une brique on l'enlève et on augmente le score
         for i in range(4):
             for j in range(18):
                 ree = bricks[i][j]
@@ -84,14 +89,19 @@ def game():
                         dy = randint(1,5)
                         bricks[i][j]=[]
                         pts = pts+1
-                        break                       
+                        break               
 
+        #on affiche le score
         msg = "SCORE : "+str(pts)
         font = cv2.FONT_HERSHEY_SIMPLEX
         bottomLeftCornerOfText = ( 230 ,25 )
         fontScale              = 1
         fontColor              = ( 0 ,0 ,0 )
         lineType               = 2
+
+        #si le ballon percute les limites
+        if ( x2 >= whole_wid ):
+            dx = -(randint(1, 5))
         if ( x1 <= 0 ):
             dx = randint(1,5)
         if ( y2 >= bar_lvl ):
