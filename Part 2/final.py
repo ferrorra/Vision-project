@@ -106,7 +106,7 @@ def game():
             cv2.putText( img ,'GAME OVER!' ,bottomLeftCornerOfText ,font ,fontScale ,fontColor ,lineType )        
             if y2 > bar_lvl+40:
                 break
-        cv2.imshow( 'Mask' ,mask )
+        #cv2.imshow( 'Mask' ,mask )
         cv2.imshow('frame',frame)
         if cv2.waitKey(10)&0xFF==ord('q'):
             cap.release( )
