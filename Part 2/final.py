@@ -35,6 +35,7 @@ def game():
     cap = cv2.VideoCapture(0)
     while(1):
         _, frame = cap.read( )
+        wf, hf, _ = frame.shape
         frame = cv2.flip(frame, 1,frame)
         hsv = cv2.cvtColor( frame ,cv2.COLOR_BGR2HSV ) #frame in hsv format
         lower_blue = np.array([110,50,50]) #lower hsv range of blue colour
@@ -52,7 +53,7 @@ def game():
                     rayon = w//2
                     frame = cv2.circle(frame,(x,y),rayon,(100,120,20),5)
                     if(rayon > 50):
-                        img = cv2.rectangle( frame,( whole_wid-(offset_mvt-25) ,bar_lvl ), ( whole_wid-(offset_mvt+25) ,bar_lvl+10 ), (255 ,255 ,255), -1 )
+                        img = cv2.rectangle( frame,( wf - (whole_wid-(offset_mvt-25)) + 1 ,bar_lvl ), ( wf - (whole_wid-(offset_mvt+25)) + 1 ,bar_lvl+10 ), (255 ,255 ,255), -1 )
                         cv2.rectangle( mask, ( x ,y ) ,( x+w ,y+h ) ,( 255 ,0 ,0 ) ,2 )
                     offset_mvt = int( ( x - ( w/2 ) ) )
         x1 = x1 + dx
