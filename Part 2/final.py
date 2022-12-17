@@ -50,7 +50,7 @@ def game():
                 cnt = contours[i] #on prend l'elt
                 if cv2.contourArea(cnt) > surfacemin and cv2.contourArea(cnt) < surfacemax:
                     x,y,w,h = cv2.boundingRect(cnt)
-                    rayon = w//2
+                    rayon = int(np.divide(np.sqrt(np.add(np.power(w,2),np.power(h,2))), 2))
                     frame = cv2.circle(frame,(x,y),rayon,(100,120,20),5)
                     if(rayon > 50):
                         img = cv2.rectangle( frame,( wf - (whole_wid-(offset_mvt-25)) + 1 ,bar_lvl ), ( wf - (whole_wid-(offset_mvt+25)) + 1 ,bar_lvl+10 ), (255 ,255 ,255), -1 )
