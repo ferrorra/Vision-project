@@ -52,8 +52,9 @@ def game():
                     rayon = w//2
                     frame = cv2.circle(frame,(x,y),rayon,(100,120,20),5)
                     if(rayon > 50):
+                        #! need fixing
                         img = cv2.rectangle( frame,( whole_wid-(offset_mvt-25) ,bar_lvl ), ( whole_wid-(offset_mvt+25) ,bar_lvl+10 ), (255 ,255 ,255), -1 )
-                        cv2.rectangle( mask, ( x ,y ) ,( x+w ,y+h ) ,( 255 ,0 ,0 ) ,2 )
+                        cv2.rectangle(mask, ( x ,y ) ,( x+w ,y+h ) ,( 255 ,0 ,0 ) ,2 )
                     offset_mvt = int( ( x - ( w/2 ) ) )
         x1 = x1 + dx
         y1 = y1 + dy
