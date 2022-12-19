@@ -35,8 +35,12 @@ def game():
     cap = cv2.VideoCapture(0)
     while(1):
         _, frame = cap.read( )
+        # convert the image to RGB
+        img = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+
+        # flip the image
+        img = cv2.flip(img,1)
         wf, hf, _ = frame.shape
-        frame = cv2.flip(frame, 1,frame)
         hsv = cv2.cvtColor( frame ,cv2.COLOR_BGR2HSV ) #frame in hsv format
         lower_blue = np.array([110,50,50]) #lower hsv range of blue colour
         upper_blue = np.array( [ 113 ,255 ,255 ] ) #upper hsv range of blue colour
@@ -51,7 +55,7 @@ def game():
                 if cv2.contourArea(cnt) > surfacemin and cv2.contourArea(cnt) < surfacemax:
                     x,y,w,h = cv2.boundingRect(cnt)
                     rayon = int(np.divide(np.sqrt(np.add(np.power(w,2),np.power(h,2))), 2))
-                    frame = cv2.circle(frame,(x,y),rayon,(100,120,20),5)
+                    img = cv2.circle(frame,(x,y),rayon,(100,120,20),5)
                     if(rayon > 50):
                         img = cv2.rectangle( frame,( whole_wid-(offset_mvt-25) ,bar_lvl ), ( whole_wid-(offset_mvt+25) ,bar_lvl+10 ), (255 ,255 ,255), -1 )
                         cv2.rectangle( mask, ( x ,y ) ,( x+w ,y+h ) ,( 255 ,0 ,0 ) ,2 ) #pour cerné la couleur détéctée dans le masque 
@@ -118,7 +122,7 @@ def game():
                 break
         cv2.putText( img ,msg,bottomLeftCornerOfText ,font ,fontScale ,fontColor ,lineType )
         #cv2.imshow( 'Mask' ,mask )
-        cv2.imshow('frame',frame)
+        cv2.imshow('frame',img)
         if cv2.waitKey(10)&0xFF==ord('q'):
             cap.release( )
             cv2.destroyAllWindows( )
